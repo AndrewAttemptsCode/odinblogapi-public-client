@@ -1,8 +1,11 @@
+import PostList from "../components/PostList";
+
 const BlogPage = () => {
   return (
-    <>
-      Blog page route
-    </>
+    <section>
+      <h1>Blog Posts</h1>
+      <PostList />
+    </section>
   )
 }
 
