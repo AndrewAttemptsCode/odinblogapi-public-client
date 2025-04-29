@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
+import AuthButton from "./AuthButton";
 
 const Container = styled.div`
   display: grid;
@@ -26,6 +27,7 @@ const Layout = () => {
     <Container>
       <Header>
         Header
+        <AuthButton />
       </Header>
       <Main>
         <Outlet />
