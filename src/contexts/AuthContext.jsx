@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
 export const AuthContext = createContext();
 
@@ -11,7 +12,19 @@ export const AuthProvider = ({ children }) => {
     const storedUser = localStorage.getItem('user');
 
     if (storedToken && storedUser) {
-      setUser(JSON.parse(storedUser));
+      try {
+        const { exp } = jwtDecode(storedToken);
+        const now = Date.now() / 1000;
+
+        if (exp < now) {
+          logout();
+        } else {
+          setUser(JSON.parse(storedUser));
+        }
+      } catch (err) {
+        console.error('Decode failed:', err);
+        logout();
+      }
     }
 
   }, []);
