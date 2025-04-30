@@ -1,9 +1,10 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [errors, setErrors] = useState(null);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -25,17 +26,33 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify(userDetails),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Login failed');
+        if (data.errors) {
+          setErrors(data.errors);
+        }
+        if (data.message) {
+          setErrors([{ msg: data.message, path: 'form' }]);
+        }
+        return Promise.reject();
       }
 
-      const data = await response.json();
-      setUser(data.user);
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
+      if (response.ok) {
+        setUser(data.user);
+        setErrors(null);
+        localStorage.setItem('token', data.token);
 
+        if (data.user) {
+          localStorage.setItem('user', JSON.stringify(data.user));
+        }
+        return Promise.resolve();
+      }
+      
     } catch (error) {
       console.error('Login Error:', error);
+      setErrors([{ msg: 'Internal server error', path: 'form' }]);
+      return Promise.reject();
     }
   }
 
@@ -53,12 +70,9 @@ export const AuthProvider = ({ children }) => {
     user,
     login,
     logout,
+    errors,
     // register,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
-
-export const useAuth = () => {
-  return useContext(AuthContext);
 };
