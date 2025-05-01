@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/useAuth";
 import { useNavigate, Link } from "react-router-dom";
 
 const LoginForm = () => {
-  const { login, errors } = useAuth();
+  const { login, errors, clearErrors } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    clearErrors();
+  }, []);
 
   const [formData, setFormData] = useState({
     username: '',
