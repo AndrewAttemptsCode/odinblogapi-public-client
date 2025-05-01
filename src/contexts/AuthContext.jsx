@@ -75,16 +75,36 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('user');
   }
 
-  // const register = (userDetails) => {
-  //   // do later
-  // }
+  const register = async (userDetails) => {
+    const response = await fetch('http://localhost:8080/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userDetails),
+    });
+    
+    const data = await response.json();
+
+    if (!response.ok) {
+      if (data.errors) {
+        setErrors(data.errors);
+      }
+      return Promise.reject();
+    }
+
+    if (response.ok) {
+      setErrors(null);
+      return Promise.resolve();
+    }
+  }
 
   const value = {
     user,
     login,
     logout,
+    register,
     errors,
-    // register,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
