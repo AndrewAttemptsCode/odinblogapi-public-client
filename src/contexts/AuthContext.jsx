@@ -99,12 +99,17 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  const clearErrors = () => {
+    setErrors(null);
+  }
+
   const value = {
     user,
     login,
     logout,
     register,
     errors,
+    clearErrors,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
