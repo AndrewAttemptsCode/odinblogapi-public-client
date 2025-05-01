@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const LoginForm = () => {
   const { login, errors } = useAuth();
@@ -39,6 +39,7 @@ const LoginForm = () => {
       <input type="password" name="password" id="password" value={formData.password} onChange={handleOnChange} />
       <p>{errors?.find(error => error.path === 'password')?.msg}</p>
       <p>{errors?.find(error => error.path === 'form')?.msg}</p>
+      <p>Need an account? <Link to={'/register'}>Register</Link></p>
       <button type="submit">Login</button>
     </form>
   );
