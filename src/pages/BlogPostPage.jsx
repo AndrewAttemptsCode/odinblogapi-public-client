@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PostItem from "../components/PostItem";
 import CommentList from "../components/CommentList";
+import CreateComment from "../components/CreateComment";
 
 const BlogPostPage = () => {
   const { postId } = useParams();
@@ -61,6 +62,7 @@ const BlogPostPage = () => {
     <section>
       <h1>Blog Post</h1>
       <PostItem postDetails={postDetails} />
+      <CreateComment />
       <CommentList postComments={postComments} />
     </section>
   );
