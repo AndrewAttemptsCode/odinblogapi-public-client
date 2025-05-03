@@ -1,18 +1,12 @@
-import { formatDate, formatTime } from "../utils";
+import CommentItem from "./CommentItem";
 
 const CommentList = ({ postComments }) => {
   return (
-    <>
+    <section>
       {postComments.map((comment) => (
-        <div key={comment.id}>
-          <p>{comment.author.username}</p>
-          <p>{formatDate(comment.createdAt)}</p>
-          <p>{formatTime(comment.createdAt)}</p>
-          <p>{comment.text}</p>
-          <hr />
-        </div>
+        <CommentItem key={comment.id} comment={comment} />
       ))}
-    </>
+    </section>
   );
 };
 
