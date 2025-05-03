@@ -1,4 +1,4 @@
-import { formatDate } from "../utils";
+import { formatDate, formatTime } from "../utils";
 
 const CommentList = ({ postComments }) => {
   return (
@@ -7,6 +7,7 @@ const CommentList = ({ postComments }) => {
         <div key={comment.id}>
           <p>{comment.author.username}</p>
           <p>{formatDate(comment.createdAt)}</p>
+          <p>{formatTime(comment.createdAt)}</p>
           <p>{comment.text}</p>
           <hr />
         </div>
