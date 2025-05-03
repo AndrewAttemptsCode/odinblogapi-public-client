@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import BlogPage from "../pages/BlogPage";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
+import BlogPostPage from "../pages/BlogPostPage";
 
 const routes = createBrowserRouter([
   {
@@ -12,6 +13,7 @@ const routes = createBrowserRouter([
       { path: '', element: <BlogPage /> },
       { path: '/login', element: <LoginPage /> },
       { path: '/register', element: <RegisterPage /> },
+      { path: '/posts/:postId', element: <BlogPostPage /> },
     ]
   },
 ]);
