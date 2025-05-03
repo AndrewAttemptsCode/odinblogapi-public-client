@@ -4,6 +4,7 @@ import PostCard from "./PostCard";
 const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -24,6 +25,11 @@ const PostList = () => {
 
       } catch (error) {
         console.error(error);
+        if (error.message === 'Failed to fetch') {
+          setError('Could not connect to the server, please try again later.');
+        } else {
+          setError(error.message);
+        }
       } finally {
         setLoading(false);
       }
@@ -33,6 +39,10 @@ const PostList = () => {
 
   if (loading) {
     return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
   }
 
   return (

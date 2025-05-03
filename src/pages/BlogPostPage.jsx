@@ -7,6 +7,7 @@ const BlogPostPage = () => {
   const { postId } = useParams();
   const [postDetails, setPostDetails] = useState(null);
   const [postComments, setPostComments] = useState(null);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,8 +22,8 @@ const BlogPostPage = () => {
   
         const data = await response.json();
   
-        if (!response.ok) {
-          throw new Error('Failed to fetch post');
+        if (!response.ok || !data.post) {
+          throw new Error('Post could not be found');
         }
   
         setPostDetails({
@@ -35,6 +36,11 @@ const BlogPostPage = () => {
         setPostComments(data.post.comments);
       } catch (error) {
         console.error(error);
+        if (error.message === 'Failed to fetch') {
+          setError('Could not connect to the server, please try again later.');
+        } else {
+          setError(error.message);
+        }
       } finally {
         setLoading(false);
       }
@@ -45,6 +51,10 @@ const BlogPostPage = () => {
 
   if (loading) {
     return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
   }
 
   return (
