@@ -17,18 +17,25 @@ const PostList = () => {
         });
   
         if (!response.ok) {
-          throw new Error('Failed to fetch posts');
+          const error = new Error('Failed to fetch posts from the server.');
+          error.status = response.status;
+          error.statusText = response.statusText;
+          throw error;
         }
   
         const data = await response.json();
+
         setPosts(data.posts);
 
       } catch (error) {
-        console.error(error);
         if (error.message === 'Failed to fetch') {
-          setError('Could not connect to the server, please try again later.');
+          setError({
+            status: 503,
+            statusText: 'Service Unavailable.',
+            message: 'Could not connect to the server, please try again later.',
+          })
         } else {
-          setError(error.message);
+          setError(error);
         }
       } finally {
         setLoading(false);
@@ -42,7 +49,7 @@ const PostList = () => {
   }
 
   if (error) {
-    return <p>{error}</p>;
+    throw error;
   }
 
   return (
