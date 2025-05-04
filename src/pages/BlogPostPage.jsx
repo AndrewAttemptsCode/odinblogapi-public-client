@@ -15,37 +15,50 @@ const BlogPostPage = () => {
     const fetchPost = async () => {
       try {
         const response = await fetch(`http://localhost:8080/posts/${postId}`, {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-        })
-  
+        });
+
         const data = await response.json();
-  
-        if (!response.ok || !data.post) {
-          throw new Error('Post could not be found');
+
+        if (!response.ok) {
+          const error = new Error('Failed to fetch post from server.');
+          error.status = response.status;
+          error.statusText = response.statusText;
+          throw error;
         }
-  
+
+        if (!data.post) {
+          const error = new Error('The requested blog post could not be found.');
+          error.status = 404;
+          error.statusText = 'Post Not Found';
+          throw error;
+        }
+
         setPostDetails({
           author: data.post.author.username,
           title: data.post.title,
           text: data.post.text,
           createdAt: data.post.createdAt,
         });
-  
+
         setPostComments(data.post.comments);
       } catch (error) {
-        console.error(error);
         if (error.message === 'Failed to fetch') {
-          setError('Could not connect to the server, please try again later.');
+          setError({
+            status: 503,
+            statusText: 'Service Unavailable',
+            message: 'Could not connect to the server, please try again later.',
+          });
         } else {
-          setError(error.message);
+          setError(error);
         }
       } finally {
         setLoading(false);
       }
-    }
+    };
 
     fetchPost();
   }, [postId]);
@@ -55,7 +68,7 @@ const BlogPostPage = () => {
   }
 
   if (error) {
-    return <p>{error}</p>;
+    throw error;
   }
 
   return (
@@ -66,6 +79,6 @@ const BlogPostPage = () => {
       <CommentList postComments={postComments} />
     </section>
   );
-}
+};
 
 export default BlogPostPage;
