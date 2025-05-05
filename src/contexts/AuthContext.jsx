@@ -76,28 +76,35 @@ export const AuthProvider = ({ children }) => {
   }
 
   const register = async (userDetails) => {
-    const response = await fetch('http://localhost:8080/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userDetails),
-    });
-    
-    const data = await response.json();
-
-    if (!response.ok) {
-      if (data.errors) {
-        setErrors(data.errors);
+    try {
+      const response = await fetch('http://localhost:8080/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userDetails),
+      });
+      
+      const data = await response.json();
+  
+      if (!response.ok) {
+        if (data.errors) {
+          setErrors(data.errors);
+        }
+        return Promise.reject();
       }
+  
+      if (response.ok) {
+        setErrors(null);
+        return Promise.resolve();
+      }
+    }catch (error) {
+      console.error('Register Error:', error);
+      setErrors([{ msg: 'Internal server error', path: 'form' }]);
       return Promise.reject();
     }
-
-    if (response.ok) {
-      setErrors(null);
-      return Promise.resolve();
-    }
   }
+    
 
   const clearErrors = () => {
     setErrors(null);
