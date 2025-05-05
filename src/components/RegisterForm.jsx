@@ -50,6 +50,7 @@ const RegisterForm = () => {
       <label htmlFor="confirmPassword">Confirm Password:</label>
       <input type="password" name="confirmPassword" id="confirmPassword" value={FormData.confirmPassword} onChange={handleOnChange} />
       <p>{errors?.find(error => error.path === 'confirmPassword')?.msg}</p>
+      <p>{errors?.find(error => error.path === 'form')?.msg}</p>
       <p>Already have an account? <Link to={'/login'}>Login</Link></p>
       <button type="submit">Register</button>
     </form>
