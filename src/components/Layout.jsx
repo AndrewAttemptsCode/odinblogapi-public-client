@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import AuthButton from "./AuthButton";
+import AdminPanel from "./AdminPanel";
 
 const Container = styled.div`
   display: grid;
@@ -27,6 +28,7 @@ const Layout = () => {
     <Container>
       <Header>
         Header
+        <AdminPanel />
         <AuthButton />
       </Header>
       <Main>
