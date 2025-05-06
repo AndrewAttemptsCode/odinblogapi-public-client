@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -13,13 +14,14 @@ export const AuthProvider = ({ children }) => {
 
     if (storedToken && storedUser) {
       try {
-        const { exp } = jwtDecode(storedToken);
+        const { exp, role } = jwtDecode(storedToken);
         const now = Date.now() / 1000;
 
         if (exp < now) {
           logout();
         } else {
           setUser(JSON.parse(storedUser));
+          setIsAdmin(role === 'ADMIN');
         }
       } catch (err) {
         console.error('Decode failed:', err);
@@ -55,6 +57,13 @@ export const AuthProvider = ({ children }) => {
         setUser(data.user);
         setErrors(null);
         localStorage.setItem('token', data.token);
+        
+        try {
+          const { role } = jwtDecode(data.token);
+          setIsAdmin(role === 'ADMIN');
+        } catch {
+          setIsAdmin(false);
+        }
 
         if (data.user) {
           localStorage.setItem('user', JSON.stringify(data.user));
@@ -73,6 +82,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    setIsAdmin(false);
   }
 
   const register = async (userDetails) => {
@@ -117,6 +127,7 @@ export const AuthProvider = ({ children }) => {
     register,
     errors,
     clearErrors,
+    isAdmin,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
