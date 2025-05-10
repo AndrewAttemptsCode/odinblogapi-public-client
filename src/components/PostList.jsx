@@ -25,7 +25,9 @@ const PostList = () => {
   
         const data = await response.json();
 
-        setPosts(data.posts);
+        const filterPublished = data.posts.filter(post => post.published === true);
+
+        setPosts(filterPublished);
 
       } catch (error) {
         if (error.message === 'Failed to fetch') {
