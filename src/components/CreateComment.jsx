@@ -3,11 +3,14 @@ import { useState } from "react";
 const CreateComment = ({ postId, refreshComments }) => {
   const [commentText, setCommentText] = useState('');
   const [errors, setErrors] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const token = localStorage.getItem('token');
     try {
+      setLoading(true);
+
       const response = await fetch(`http://localhost:8080/posts/${postId}/comments`, {
         method: 'POST',
         headers: {
@@ -34,6 +37,8 @@ const CreateComment = ({ postId, refreshComments }) => {
     } catch (error) {
       console.error('Create comment error:', error);
       setErrors([{ path: 'text', msg: 'Internal Server Error' }]);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -46,7 +51,7 @@ const CreateComment = ({ postId, refreshComments }) => {
       <input type="text" name="text" id="text" value={commentText} onChange={handleOnChange} placeholder="Drop a comment..." />
       <p>{errors?.find(error => error.path === 'text')?.msg}</p>
       <p>{errors?.find(error => error.path === 'auth')?.msg}</p>
-      <button type="submit">Send Message</button>
+      <button type="submit" disabled={loading}>{loading ? 'Processing...' : 'Send Message'}</button>
     </form>
   );
 };
