@@ -1,9 +1,18 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { User } from 'lucide-react';
 
 const Card = styled.article`
   padding-bottom: 1rem;
+  color: #111827;
 
+  & strong {
+    font-size: 1.5rem;
+  }
+
+  & a {
+    color: #6B7280;
+  }
 `
 
 const PostText = styled.p`
@@ -15,12 +24,21 @@ const PostText = styled.p`
   width: 100%;
 `;
 
+const Info = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+`
+
 
 const PostCard = ({ post }) => {
   return (
     <Card>
-      <p>{post.title}</p>
-      <p>{post.author.username}</p>
+      <strong>{post.title}</strong>
+      <Info>
+        <User size={20} color="#3B82F6" />
+        {post.author.username}
+      </Info>
       <PostText>{post.text}</PostText>
       <Link to={`/posts/${post.id}`}>Read more...</Link>
       <hr />
