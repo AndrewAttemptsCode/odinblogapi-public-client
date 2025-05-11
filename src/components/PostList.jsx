@@ -1,5 +1,15 @@
 import { useEffect, useState } from "react";
 import PostCard from "./PostCard";
+import styled from "styled-components";
+
+const Container = styled.div`
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-rows: auto;
+  max-width: 65ch;
+  width: 100%;
+`
+
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
@@ -9,7 +19,7 @@ const PostList = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://localhost:8080/posts', {
+        const response = await fetch(`${import.meta.env.VITE_DATABASE_URL}/posts`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -55,11 +65,11 @@ const PostList = () => {
   }
 
   return (
-    <div>
+    <Container>
     {posts.map(post => (
       <PostCard key={post.id} post={post} />
     ))}
-    </div>
+    </Container>
   );
 }
 
