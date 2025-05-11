@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import AuthButton from "./AuthButton";
 import AdminPanel from "./AdminPanel";
+import HeaderLogo from "./HeaderLogo";
 
 const Container = styled.div`
   display: grid;
@@ -10,12 +11,16 @@ const Container = styled.div`
     'header'
     'main';
   min-height: 100vh;
-  background-color: aliceblue;
+  background-color: #F9FAFB;
 `
 
 const Header = styled.div`
   grid-area: header;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2rem;
 `
 
 const Main = styled.div`
@@ -27,7 +32,7 @@ const Layout = () => {
   return (
     <Container>
       <Header>
-        Header
+        <HeaderLogo />
         <AdminPanel />
         <AuthButton />
       </Header>
