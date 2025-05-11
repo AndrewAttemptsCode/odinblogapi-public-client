@@ -7,11 +7,16 @@ const Container = styled.div`
   gap: 10px;
   align-items: center;
   font-size: 1.1rem;
-  font-weight: bold;
+  font-weight: 500;
   color: #111827;
 
   & p {
     font-weight: 400;
+  }
+
+  @media (max-width: 450px) {
+    font-size: 1rem;
+    gap: 5px;
   }
 `
 
@@ -24,6 +29,10 @@ const Button = styled.button`
 
   &:hover {
     opacity: 0.9;
+  }
+
+  @media (max-width: 450px) {
+    padding: 4px 8px;
   }
 `
 

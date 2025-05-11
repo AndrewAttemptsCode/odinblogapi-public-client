@@ -21,6 +21,10 @@ const Header = styled.div`
   align-items: center;
   justify-content: flex-end;
   gap: 2rem;
+
+  @media (max-width: 450px) {
+    gap: 1rem;
+  }
 `
 
 const Main = styled.div`

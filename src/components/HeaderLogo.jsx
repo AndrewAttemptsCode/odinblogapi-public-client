@@ -12,6 +12,10 @@ const Logo = styled.h1`
   & span {
     color: #111827;
   }
+
+  @media (max-width: 450px) {
+    font-size: 1.5rem;
+  }
 `
 
 const StyledLink = styled(Link)`

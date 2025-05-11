@@ -18,6 +18,10 @@ const PageTitle = styled.h1`
   & span {
     color: #111827;
   }
+
+  @media (max-width: 450px) {
+    font-size: 2rem;
+  }
 `
 
 const BlogPage = () => {
