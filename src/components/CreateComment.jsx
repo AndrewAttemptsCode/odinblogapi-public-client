@@ -1,4 +1,47 @@
 import { useState } from "react";
+import styled from "styled-components";
+
+const Form = styled.form`
+  width: 100%;
+  max-width: 75ch;
+  color: #111827;
+
+  & textarea {
+    resize: vertical;
+    width: 100%;
+    height: 100px;
+    padding: 0.5rem;
+  }
+
+  & button {
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    background-color: #3B82F6;
+    color: #F9FAFB;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+`
+
+const Info = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  & p {
+    color: red;
+  }
+
+  @media (max-width: 450px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+`
 
 const CreateComment = ({ postId, refreshComments }) => {
   const [commentText, setCommentText] = useState('');
@@ -47,12 +90,14 @@ const CreateComment = ({ postId, refreshComments }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" name="text" id="text" value={commentText} onChange={handleOnChange} placeholder="Drop a comment..." />
-      <p>{errors?.find(error => error.path === 'text')?.msg}</p>
-      <p>{errors?.find(error => error.path === 'auth')?.msg}</p>
-      <button type="submit" disabled={loading}>{loading ? 'Processing...' : 'Send Message'}</button>
-    </form>
+    <Form onSubmit={handleSubmit}>
+      <textarea name="text" id="text" value={commentText} onChange={handleOnChange} placeholder="Drop a comment..."></textarea>
+      <Info>
+        <button type="submit" disabled={loading}>{loading ? 'Processing...' : 'Send Message'}</button>
+        <p>{errors?.find(error => error.path === 'text')?.msg}</p>
+        <p>{errors?.find(error => error.path === 'auth')?.msg}</p>
+      </Info>
+    </Form>
   );
 };
 
