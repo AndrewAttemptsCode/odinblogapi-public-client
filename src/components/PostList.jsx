@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import PostCard from "./PostCard";
 import styled from "styled-components";
+import LoadingSpinner from "./LoadingSpinner";
 
 const Container = styled.div`
   margin-top: 1.5rem;
@@ -9,7 +10,6 @@ const Container = styled.div`
   max-width: 65ch;
   width: 100%;
 `
-
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
@@ -57,7 +57,7 @@ const PostList = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <LoadingSpinner />;
   }
 
   if (error) {

@@ -4,6 +4,7 @@ import PostItem from "../components/PostItem";
 import CommentList from "../components/CommentList";
 import CreateComment from "../components/CreateComment";
 import styled from "styled-components";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const Section = styled.section`
   display: flex;
@@ -84,8 +85,12 @@ const BlogPostPage = () => {
   }, [fetchPost]);
 
   if (loading) {
-    return <p>Loading...</p>;
-  }
+    return (
+      <Section>
+        <LoadingSpinner />
+      </Section>
+    );
+  };
 
   if (error) {
     throw error;
