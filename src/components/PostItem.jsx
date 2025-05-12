@@ -23,6 +23,10 @@ const Item = styled.section`
   }
 `
 
+const Hr = styled.hr`
+  margin: 1rem 0;
+`
+
 const PostItem = ({ postDetails }) => {
   return (
     <Item>
@@ -34,7 +38,7 @@ const PostItem = ({ postDetails }) => {
         {formatDate(postDetails.createdAt)}
       </Info>
       <p>{postDetails.text}</p>
-      <hr />
+      <Hr />
     </Item>
   );
 };
