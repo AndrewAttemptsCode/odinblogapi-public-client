@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (userDetails) => {
     try {
-      const response = await fetch('http://localhost:8080/auth/login', {
+      const response = await fetch(`${import.meta.env.VITE_DATABASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userDetails) => {
     try {
-      const response = await fetch('http://localhost:8080/users', {
+      const response = await fetch(`${import.meta.env.VITE_DATABASE_URL}/users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ export const AuthProvider = ({ children }) => {
         setErrors(null);
         return Promise.resolve();
       }
-    }catch (error) {
+    } catch (error) {
       console.error('Register Error:', error);
       setErrors([{ msg: 'Internal server error', path: 'form' }]);
       return Promise.reject();
