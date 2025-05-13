@@ -5,6 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 const LoginForm = () => {
   const { login, errors, clearErrors } = useAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     clearErrors();
@@ -27,10 +28,13 @@ const LoginForm = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
+      setLoading(true);
       await login(formData); 
       navigate('/');
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,7 +48,7 @@ const LoginForm = () => {
       <p>{errors?.find(error => error.path === 'password')?.msg}</p>
       <p>{errors?.find(error => error.path === 'form')?.msg}</p>
       <p>Need an account? <Link to={'/register'}>Register</Link></p>
-      <button type="submit">Login</button>
+      <button type="submit" disabled={loading}>{loading ? 'Processing...' : 'Login'}</button>
     </form>
   );
 };
