@@ -1,6 +1,26 @@
 import { useEffect } from "react";
 import RegisterForm from "../components/RegisterForm";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
+const Section = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`
+const PageTitle = styled.h1`
+  color: #3B82F6;
+  font-size: 3rem;
+  
+  & span {
+    color: #111827;
+  }
+
+  @media (max-width: 450px) {
+    font-size: 2rem;
+  }
+`
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -13,10 +33,10 @@ const RegisterPage = () => {
   }, [navigate]);
 
   return (
-    <div>
-      <h1>Register an Account</h1>
+    <Section>
+      <PageTitle>Register <span>Account</span></PageTitle>
       <RegisterForm />
-    </div>
+    </Section>
   );
 }
 
