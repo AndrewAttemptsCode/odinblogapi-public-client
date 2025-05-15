@@ -21,6 +21,12 @@ const Item = styled.section`
   & p {
     white-space: pre-wrap;
   }
+
+  @media (max-width: 450px) {
+    h2 {
+      font-size: 1rem;
+    }
+  }
 `
 
 const Hr = styled.hr`

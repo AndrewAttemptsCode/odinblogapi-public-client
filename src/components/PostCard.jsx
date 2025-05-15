@@ -13,6 +13,12 @@ const Card = styled.article`
   & a {
     color: #6B7280;
   }
+
+  @media (max-width: 450px) {
+    strong {
+      font-size: 1rem;
+    }
+  }
 `
 
 const PostText = styled.p`
