@@ -34,7 +34,7 @@ const BlogPostPage = () => {
 
   const fetchPost = useCallback(async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_DATABASE_URL}/posts/${postId}`, {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/posts/${postId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (userDetails) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_DATABASE_URL}/auth/login`, {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userDetails) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_DATABASE_URL}/users`, {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

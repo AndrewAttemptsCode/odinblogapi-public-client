@@ -54,7 +54,7 @@ const CreateComment = ({ postId, refreshComments }) => {
     try {
       setLoading(true);
 
-      const response = await fetch(`${import.meta.env.VITE_DATABASE_URL}/posts/${postId}/comments`, {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/posts/${postId}/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
