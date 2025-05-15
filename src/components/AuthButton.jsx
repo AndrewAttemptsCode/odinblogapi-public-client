@@ -12,6 +12,10 @@ const Container = styled.div`
 
   & p {
     font-weight: 400;
+
+    @media (max-width: 450px) {
+      display: none;
+    }
   }
 
   @media (max-width: 450px) {
